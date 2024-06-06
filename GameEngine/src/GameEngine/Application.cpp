@@ -1,5 +1,8 @@
 #include "Application.h"
 
+#include "GameEngine/Events/ApplicationEvent.h"
+#include "GameEngine/Log.h"
+
 namespace GameEngine
 {
 	Application::Application()
