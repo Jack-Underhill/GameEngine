@@ -4,7 +4,6 @@ namespace GameEngine
 {
 	Application::Application()
 	{
-
 	}
 	Application::~Application()
 	{
