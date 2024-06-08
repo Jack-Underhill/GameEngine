@@ -10,6 +10,12 @@ workspace "GameEngine"
 
 outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 
+-- Include directories relative to root folder (sol. dir.)
+IncludeDir = {}
+IncludeDir["GLFW"] = "GameEngine/vendor/GLFW/include"
+
+include "GameEngine/vendor/GLFW"
+
 project "GameEngine"
 	location "GameEngine"
 	kind "SharedLib"
@@ -30,7 +36,15 @@ project "GameEngine"
 	includedirs
 	{
 		"%{prj.name}/src",
-		"%{prj.name}/vendor/spdlog/include"
+		"%{prj.name}/vendor/spdlog/include",
+		"%{IncludeDir.GLFW}"
+	}
+
+	links
+	{
+		"GLFW",
+		"opengl32.lib",
+		"dwmapi.lib"
 	}
 
 	filter "system:windows"
@@ -51,15 +65,24 @@ project "GameEngine"
 
 	filter "configurations:Debug"
 		defines "GE_DEBUG"
+		runtime "Debug"
 		symbols "On"
+		links { "ucrtd.lib", "vcruntime.lib" }
+		buildoptions { "/MDd" }
 
 	filter "configurations:Release"
 		defines "GE_RELEASE"
+		runtime "Release"
 		optimize "On"
+		links { "ucrt.lib", "vcruntime.lib" }
+		buildoptions { "/MD" }
 
 	filter "configurations:Dist"
 		defines "GE_DIST"
+		runtime "Release"
 		optimize "On"
+		links { "ucrt.lib", "vcruntime.lib" }
+		buildoptions { "/MD" }
 
 project "Sandbox"
 	location "Sandbox"
@@ -98,12 +121,18 @@ project "Sandbox"
 
 	filter "configurations:Debug"
 		defines "GE_DEBUG"
+		runtime "Debug"
 		symbols "On"
+		buildoptions { "/MDd" }
 
 	filter "configurations:Release"
 		defines "GE_RELEASE"
+		runtime "Release"
 		optimize "On"
+		buildoptions { "/MD" }
 
 	filter "configurations:Dist"
 		defines "GE_DIST"
+		runtime "Release"
 		optimize "On"
+		buildoptions { "/MD" }
