@@ -1,5 +1,6 @@
 workspace "GameEngine"
 	architecture "x64"
+	startproject "Sandbox"
 
 	configurations
 	{
@@ -10,12 +11,11 @@ workspace "GameEngine"
 
 outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 
--- Include directories relative to root folder (sol. dir.)
+-- Include directories relative to root folder (solution directory)
 IncludeDir = {}
 IncludeDir["GLFW"] = "GameEngine/vendor/GLFW/include"
 IncludeDir["Glad"] = "GameEngine/vendor/Glad/include"
 IncludeDir["ImGui"] = "GameEngine/vendor/imgui"
-
 
 include "GameEngine/vendor/GLFW"
 include "GameEngine/vendor/Glad"
@@ -25,6 +25,7 @@ project "GameEngine"
 	location "GameEngine"
 	kind "SharedLib"
 	language "C++"
+	staticruntime "off"
 
 	targetdir ("bin/" .. outputdir .. "/%{prj.name}")
 	objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
@@ -52,13 +53,11 @@ project "GameEngine"
 		"GLFW",
 		"Glad",
 		"ImGui",
-		"opengl32.lib",
-		"dwmapi.lib"
+		"opengl32.lib"
 	}
 
 	filter "system:windows"
 		cppdialect "C++17"
-		staticruntime "On"
 		systemversion "latest"
 
 		defines
@@ -70,34 +69,29 @@ project "GameEngine"
 
 		postbuildcommands
 		{
-			("{COPY} %{cfg.buildtarget.relpath} ../bin/" .. outputdir .. "/Sandbox/")
+			("{COPY} %{cfg.buildtarget.relpath} \"../bin/" .. outputdir .. "/Sandbox/\"")
 		}
 
 	filter "configurations:Debug"
 		defines "GE_DEBUG"
 		runtime "Debug"
 		symbols "On"
-		links { "ucrtd.lib", "vcruntime.lib" }
-		buildoptions { "/MDd" }
 
 	filter "configurations:Release"
 		defines "GE_RELEASE"
 		runtime "Release"
 		optimize "On"
-		links { "ucrt.lib", "vcruntime.lib" }
-		buildoptions { "/MD" }
 
 	filter "configurations:Dist"
 		defines "GE_DIST"
 		runtime "Release"
 		optimize "On"
-		links { "ucrt.lib", "vcruntime.lib" }
-		buildoptions { "/MD" }
 
 project "Sandbox"
 	location "Sandbox"
 	kind "ConsoleApp"
 	language "C++"
+	staticruntime "off"
 
 	targetdir ("bin/" .. outputdir .. "/%{prj.name}")
 	objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
@@ -121,7 +115,6 @@ project "Sandbox"
 
 	filter "system:windows"
 		cppdialect "C++17"
-		staticruntime "On"
 		systemversion "latest"
 
 		defines
@@ -133,16 +126,13 @@ project "Sandbox"
 		defines "GE_DEBUG"
 		runtime "Debug"
 		symbols "On"
-		buildoptions { "/MDd" }
 
 	filter "configurations:Release"
 		defines "GE_RELEASE"
 		runtime "Release"
 		optimize "On"
-		buildoptions { "/MD" }
 
 	filter "configurations:Dist"
 		defines "GE_DIST"
 		runtime "Release"
 		optimize "On"
-		buildoptions { "/MD" }
