@@ -150,8 +150,6 @@ namespace GameEngine
 			MouseMovedEvent event((float)xPos, (float)yPos);
 			data.EventCallback(event);
 		});
-
-
 	}
 
 	void WindowsWindow::Shutdown()
