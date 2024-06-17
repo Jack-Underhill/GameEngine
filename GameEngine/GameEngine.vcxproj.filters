@@ -49,6 +49,9 @@
     <ClInclude Include="src\GameEngine\Input.h">
       <Filter>GameEngine</Filter>
     </ClInclude>
+    <ClInclude Include="src\GameEngine\KeyCodes.h">
+      <Filter>GameEngine</Filter>
+    </ClInclude>
     <ClInclude Include="src\GameEngine\Layer.h">
       <Filter>GameEngine</Filter>
     </ClInclude>
@@ -56,6 +59,9 @@
       <Filter>GameEngine</Filter>
     </ClInclude>
     <ClInclude Include="src\GameEngine\Log.h">
+      <Filter>GameEngine</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GameEngine\MouseButtonCodes.h">
       <Filter>GameEngine</Filter>
     </ClInclude>
     <ClInclude Include="src\GameEngine\Window.h">
@@ -71,8 +77,6 @@
       <Filter>Platform\Windows</Filter>
     </ClInclude>
     <ClInclude Include="src\gepch.h" />
-    <ClInclude Include="src\GameEngine\KeyCodes.h" />
-    <ClInclude Include="src\GameEngine\MouseButtonCodes.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\GameEngine\Application.cpp">
