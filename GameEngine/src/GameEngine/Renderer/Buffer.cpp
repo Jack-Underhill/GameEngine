@@ -15,12 +15,12 @@ namespace GameEngine
 	{
 		switch (Renderer::GetAPI())
 		{
-			case RendererAPI::None:
+			case RendererAPI::API::None:
 			{
 				GE_CORE_ASSERT(false, "RendererAPI::None is currently not supported!");
 				return nullptr;
 			}
-			case RendererAPI::OpenGL:
+			case RendererAPI::API::OpenGL:
 			{
 				return new OpenGLVertexBuffer(vertices, size);
 			}
@@ -38,12 +38,12 @@ namespace GameEngine
 	{
 		switch (Renderer::GetAPI())
 		{
-			case RendererAPI::None:
+			case RendererAPI::API::None:
 			{
 				GE_CORE_ASSERT(false, "RendererAPI::None is currently not supported!");
 				return nullptr;
 			}
-			case RendererAPI::OpenGL:
+			case RendererAPI::API::OpenGL:
 			{
 				return new OpenGLIndexBuffer(indices, count);
 			}
