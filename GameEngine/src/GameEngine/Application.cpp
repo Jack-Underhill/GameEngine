@@ -3,6 +3,8 @@
 
 #include "GameEngine/Log.h"
 
+#include <glfw/glfw3.h>
+
 namespace GameEngine
 {
 #define BIND_EVENT_FN(x) std::bind(&Application::x, this, std::placeholders::_1)
@@ -15,6 +17,7 @@ namespace GameEngine
 		s_Instance = this;
 
 		m_IsRunning = true;
+		m_LastFrameTime = 0.0f;
 
 		m_Window = std::unique_ptr<Window>(Window::Create());
 		m_Window->SetEventCallback(BIND_EVENT_FN(OnEvent));
@@ -44,8 +47,12 @@ namespace GameEngine
 	{
 		while (m_IsRunning)
 		{
+			float time = (float)glfwGetTime();
+			Timestep timestep = time - m_LastFrameTime;
+			m_LastFrameTime = time;
+
 			for (Layer* layer : m_LayerStack)
-				layer->OnUpdate();
+				layer->OnUpdate(timestep);
 
 			m_ImGuiLayer->Begin();
 			for (Layer* layer : m_LayerStack)
